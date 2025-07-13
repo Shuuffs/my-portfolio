@@ -26,13 +26,19 @@
 </template>
 
 <style>
+html,
 body {
   margin: 0;
+  height: 100%;
+  overflow-x: hidden;
   font-family: sans-serif;
+
+  /* ✅ Use relative path and Vite's alias (@) */
+  background-image: url("@/assets/bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* Optional for parallax feel */
+  background-attachment: fixed;
 }
 </style>
 

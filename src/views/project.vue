@@ -6,10 +6,7 @@
       <div class="education-row">
         <!-- A-Level -->
         <div class="education-card">
-          <img
-            src="C:\Users\User\Documents\coding-bn-assesment2\src\assets\md.jfif"
-            alt="A-Level"
-          />
+          <img src="@/assets/md.jfif" alt="A-Level" />
           <div class="education-details">
             <h3>February 2018 – November 2019</h3>
             <p>Maktab Duli Pengiran Muda Al-Muhtadee Billah, My Subject are:</p>
@@ -19,10 +16,7 @@
 
         <!-- UTB -->
         <div class="education-card">
-          <img
-            src="C:\Users\User\Documents\coding-bn-assesment2\src\assets\utb.png"
-            alt="UTB"
-          />
+          <img src="@/assets/utb.png" alt="UTB" />
           <div class="education-details">
             <h3>August 2020 – August 2024</h3>
             <p>Universiti Teknologi Brunei</p>
@@ -39,7 +33,7 @@
         <!-- Laravel Project -->
         <div class="project-card fade-in-left">
           <img
-            src="C:\Users\User\Documents\coding-bn-assesment2\src\assets\csa.png"
+            src="@/assets/csa.png"
             alt="Contractor Scoring System"
             class="project-img"
           />
@@ -58,7 +52,7 @@
         <!-- Flutter Project -->
         <div class="project-card fade-in-right">
           <img
-            src="C:\Users\User\Documents\coding-bn-assesment2\src\assets\wts.png"
+            src="@/assets/wts.png"
             alt="Water Taxi Tracking App"
             class="project-img"
           />

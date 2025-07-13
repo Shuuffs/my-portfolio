@@ -3,10 +3,7 @@
     <section class="about-section">
       <!-- Image on the LEFT -->
       <div class="image-block2 animate-fade-in-left">
-        <img
-          src="C:\Users\User\Documents\coding-bn-assesment2\src\assets\pic.png"
-          alt="Syufiq"
-        />
+        <img src="@/assets/pic.png" alt="Syufiq" />
       </div>
 
       <!-- Text on the RIGHT -->
@@ -58,45 +55,27 @@ function goToContact() {
 const skills = [
   {
     name: "VueJS",
-    logo: new URL(
-      "C:\Users\User\Documents\coding-bn-assesment2\src\assets\vue.svg",
-      import.meta.url
-    ).href,
+    logo: new URL("@/assets/vue.svg", import.meta.url).href,
   },
   {
     name: "ReactJS",
-    logo: new URL(
-      "C:\Users\User\Documents\coding-bn-assesment2\src\assets\react.svg",
-      import.meta.url
-    ).href,
+    logo: new URL("@/assets/react.svg", import.meta.url).href,
   },
   {
     name: "VS Code",
-    logo: new URL(
-      "C:\Users\User\Documents\coding-bn-assesment2\src\assets\vsc.png",
-      import.meta.url
-    ).href,
+    logo: new URL("@/assets/vsc.png", import.meta.url).href,
   },
   {
     name: "Tailwind CSS",
-    logo: new URL(
-      "C:\Users\User\Documents\coding-bn-assesment2\src\assets\tailwind.png",
-      import.meta.url
-    ).href,
+    logo: new URL("@/assets/tailwind.png", import.meta.url).href,
   },
   {
     name: "NodeJS",
-    logo: new URL(
-      "C:\Users\User\Documents\coding-bn-assesment2\src\assets\node.svg",
-      import.meta.url
-    ).href,
+    logo: new URL("@/assets/node.svg", import.meta.url).href,
   },
   {
     name: "Flutter",
-    logo: new URL(
-      "C:\Users\User\Documents\coding-bn-assesment2\src\assets\flutter.svg",
-      import.meta.url
-    ).href,
+    logo: new URL("@/assets/flutter.svg", import.meta.url).href,
   },
 ];
 </script>

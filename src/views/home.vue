@@ -16,10 +16,7 @@
 
     <!-- Image on the RIGHT -->
     <div class="image-block animate-fade-in-right">
-      <img
-        src="C:\Users\User\Documents\coding-bn-assesment2\src\assets\pic.png"
-        alt="Syufiq"
-      />
+      <img src="@/assets/pic.png" alt="Syufiq" />
     </div>
   </section>
 </template>

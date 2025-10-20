@@ -2,7 +2,7 @@
   <div class="layout">
     <!-- NAVBAR -->
     <header class="navbar">
-      <h1 class="title font-mono text-3xl text-cyan-400">Portfolio</h1>
+      <h1 class="title font-mono text-3xl text-cyan-400">Syufiq's Portfolio</h1>
       
       <!-- Hamburger Menu Button (Mobile Only) -->
       <button class="hamburger" @click="toggleMenu" :class="{ active: isMenuOpen }">
@@ -73,9 +73,14 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.7); /* semi-transparent navbar */
+  background-color: rgba(0, 0, 0, 0.9); /* semi-transparent navbar */
   color: white;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1002;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 @media (min-width: 768px) {
@@ -234,12 +239,14 @@ body {
 .page {
   flex: 1;
   padding: 1rem;
+  padding-top: 70px; /* Add space for fixed navbar */
   color: white; /* to be readable over dark background */
 }
 
 @media (min-width: 768px) {
   .page {
     padding: 2rem;
+    padding-top: 80px; /* Add space for fixed navbar on desktop */
   }
 }
 

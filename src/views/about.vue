@@ -62,6 +62,18 @@ const skills = [
     logo: new URL("@/assets/react.svg", import.meta.url).href,
   },
   {
+    name: "React Native",
+    logo: new URL("@/assets/react.svg", import.meta.url).href,
+  },
+  {
+    name: "Expo",
+    logo: new URL("@/assets/expo.svg", import.meta.url).href,
+  },
+  {
+    name: "Supabase",
+    logo: new URL("@/assets/supabase.svg", import.meta.url).href,
+  },
+  {
     name: "VS Code",
     logo: new URL("@/assets/vsc.png", import.meta.url).href,
   },

@@ -57,13 +57,6 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-
-@media (max-width: 768px) {
-  html,
-  body {
-    background-attachment: scroll;
-  }
-}
 </style>
 
 <style scoped>

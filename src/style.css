@@ -11,6 +11,13 @@ body {
   background-attachment: fixed;
 }
 
+@media (max-width: 768px) {
+  html,
+  body {
+    background-attachment: scroll;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

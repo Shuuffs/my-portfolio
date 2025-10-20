@@ -74,35 +74,64 @@
 
 <style>
 .education-section {
-  padding: 3rem 2rem;
+  padding: 1.5rem 1rem;
   color: white;
 }
 
+@media (min-width: 768px) {
+  .education-section {
+    padding: 3rem 2rem;
+  }
+}
+
 .section-title {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-/* Flex row */
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
 .education-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .education-row {
+    gap: 2rem;
+  }
 }
 
 .education-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
   background-color: rgba(0, 0, 0, 0.7);
   border: 1px solid #444;
   border-radius: 12px;
-  padding: 1.5rem;
-  width: 450px;
+  padding: 1.25rem;
+  width: 100%;
   max-width: 100%;
   transition: transform 0.3s ease;
+}
+
+@media (min-width: 540px) {
+  .education-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    max-width: 450px;
+  }
 }
 
 .education-card:hover {
@@ -110,22 +139,54 @@
 }
 
 .education-card img {
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   border-radius: 8px;
   background-color: white;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .education-card img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.education-details {
+  text-align: center;
+}
+
+@media (min-width: 540px) {
+  .education-details {
+    text-align: left;
+  }
 }
 
 .education-details h3 {
   margin-bottom: 0.3rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .education-details h3 {
+    font-size: 1.2rem;
+  }
 }
 
 .education-details p,
 .education-details ul {
   margin: 0.3rem 0;
   color: #ddd;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .education-details p,
+  .education-details ul {
+    font-size: 1rem;
+  }
 }
 
 .education-details ul {
@@ -134,35 +195,52 @@
 }
 
 .projects-section {
-  padding: 2rem;
+  padding: 1.5rem 1rem;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  .projects-section {
+    padding: 2rem;
+  }
 }
 
 .projects-grid {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  margin-top: 2rem;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  align-items: center;
 }
 
 @media (min-width: 768px) {
   .projects-grid {
     flex-direction: row;
     justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
   }
 }
+
 .project-card {
   background-color: rgba(0, 0, 0, 0.7);
   border: 1px solid #444;
-  padding: 1.5rem;
+  padding: 1.25rem;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   max-width: 500px;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .project-card {
+    padding: 1.5rem;
+  }
 }
 
 .project-card:hover {
@@ -177,20 +255,38 @@
 }
 
 .project-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   margin-bottom: 0.75rem;
 }
 
+@media (min-width: 768px) {
+  .project-card h3 {
+    font-size: 1.5rem;
+  }
+}
+
 .project-card p {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #ccc;
+}
+
+@media (min-width: 768px) {
+  .project-card p {
+    font-size: 1rem;
+  }
 }
 
 .tech-used {
   display: inline-block;
   margin-top: 1rem;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   color: #aaa;
+}
+
+@media (min-width: 768px) {
+  .tech-used {
+    font-size: 0.875rem;
+  }
 }
 
 /* Animation */

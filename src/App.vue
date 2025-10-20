@@ -40,6 +40,13 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
+
+@media (max-width: 768px) {
+  html,
+  body {
+    background-attachment: scroll;
+  }
+}
 </style>
 
 <style scoped>
@@ -47,9 +54,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-
   background-color: rgba(0, 0, 0, 0.4); /* Optional overlay effect */
 }
 
@@ -58,25 +62,49 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem;
   background-color: rgba(0, 0, 0, 0.7); /* semi-transparent navbar */
   color: white;
   position: relative;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    padding: 1rem 2rem;
+  }
 }
 
 /* Title */
 .title {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 1.5rem;
+  }
 }
 
 /* Centered Links */
 .nav-links {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    gap: 2rem;
+  }
 }
 
 /* All Router Links */
@@ -85,6 +113,13 @@ body {
   text-decoration: none;
   font-weight: 500;
   transition: font-weight 0.2s ease;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .nav-links :deep(a) {
+    font-size: 1rem;
+  }
 }
 
 /* Hover Effect */
@@ -101,7 +136,13 @@ body {
 /* Page content */
 .page {
   flex: 1;
-  padding: 2rem;
+  padding: 1rem;
   color: white; /* to be readable over dark background */
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 2rem;
+  }
 }
 </style>

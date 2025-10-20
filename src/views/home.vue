@@ -54,7 +54,7 @@ function goToContact() {
   gap: 2rem;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
   color: white;
   min-height: 100vh;
 }
@@ -62,43 +62,66 @@ function goToContact() {
 @media (min-width: 768px) {
   .home-section {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
+    padding: 2rem;
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-section {
+    gap: 4rem;
   }
 }
 
 .text-block {
   flex: 1;
   text-align: center;
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
   .text-block {
     text-align: left;
+    max-width: 50%;
   }
 }
 
 .text-block h2 {
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .text-block h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .text-block p {
-  font-size: 1.125rem;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
   color: #ddd;
+}
+
+@media (min-width: 768px) {
+  .text-block p {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .description {
   color: #bbb;
+  min-height: 1.5rem;
 }
 
 .btn-contact {
   margin-top: 1rem;
   padding: 0.6rem 1.5rem;
   background-color: #2563eb;
-  margin-left: 50vh;
-
   color: white;
   font-weight: 600;
   border: none;
@@ -107,18 +130,37 @@ function goToContact() {
   transition: background-color 0.3s ease;
 }
 
+@media (min-width: 768px) {
+  .btn-contact {
+    margin-left: 0;
+  }
+}
+
 .btn-contact:hover {
   background-color: #1e40af;
 }
 
 .image-block {
-  width: 50vh;
-  height: 60vh;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  aspect-ratio: 5/6;
   border-radius: 0.5rem;
-  margin-right: 50vh;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .image-block {
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .image-block {
+    max-width: 400px;
+  }
 }
 
 .image-block img {

@@ -132,14 +132,33 @@ function deleteExperience(index) {
 <style scoped>
 .experience-wrapper {
   max-width: 1000px;
-  margin: 2rem auto;
-  padding: 1.5rem;
+  margin: 1rem auto;
+  padding: 1rem;
   color: white;
+}
+
+@media (min-width: 768px) {
+  .experience-wrapper {
+    margin: 2rem auto;
+    padding: 1.5rem;
+  }
+}
+
+.experience-wrapper h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .experience-wrapper h2 {
+    font-size: 2rem;
+  }
 }
 
 .experience-content {
   display: flex;
-  flex-direction: column; /* 👈 Stack vertically */
+  flex-direction: column;
 }
 
 @media (max-width: 768px) {
@@ -152,15 +171,29 @@ function deleteExperience(index) {
   flex: 5;
   width: 100%;
 }
+
 .experience-list {
   flex: 2;
-  min-width: 300px;
+  min-width: 100%;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .experience-list {
+    min-width: 300px;
+  }
 }
 
 .experience-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .experience-form {
+    gap: 2rem;
+  }
 }
 
 .experience-form input,
@@ -168,9 +201,16 @@ function deleteExperience(index) {
   padding: 0.75rem;
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 1rem;
+  font-size: 0.95rem;
   background: white;
   color: black;
+}
+
+@media (min-width: 768px) {
+  .experience-form input,
+  .experience-form textarea {
+    font-size: 1rem;
+  }
 }
 
 .experience-form button {
@@ -189,7 +229,13 @@ function deleteExperience(index) {
 
 .experience-list h3 {
   margin-bottom: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .experience-list h3 {
+    font-size: 1.5rem;
+  }
 }
 
 .experience-item {
@@ -199,6 +245,27 @@ function deleteExperience(index) {
   padding: 1rem;
   margin-bottom: 1rem;
   position: relative;
+  word-wrap: break-word;
+}
+
+.experience-item h4 {
+  font-size: 1.1rem;
+}
+
+@media (min-width: 768px) {
+  .experience-item h4 {
+    font-size: 1.2rem;
+  }
+}
+
+.experience-item p {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .experience-item p {
+    font-size: 1rem;
+  }
 }
 
 .delete-btn {
@@ -221,7 +288,14 @@ function deleteExperience(index) {
   margin-top: 0.5rem;
   color: #38bdf8;
   text-decoration: underline;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+@media (min-width: 768px) {
+  .file-link {
+    font-size: 0.95rem;
+  }
 }
 
 .file-link:hover {

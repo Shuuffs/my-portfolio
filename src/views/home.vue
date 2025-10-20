@@ -27,7 +27,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const fullText = "Front-End Developer Majoring in Vue.js";
+const fullText = "A passionate software developer with experience working on multiple real-world projects.";
 const typedText = ref("");
 let index = 0;
 

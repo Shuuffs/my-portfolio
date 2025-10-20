@@ -6,30 +6,18 @@
         <img src="@/assets/pic.png" alt="Syufiq" />
       </div>
 
-      <!-- Text on the RIGHT -->
       <div class="text-block animate-fade-in-up">
-        <h2>About Me</h2>
+  <h2>About Me</h2>
 
-        <p class="description">
-          Hi! I'm Syufiq, a Software Development major. Since I hadn’t practiced
-          coding in a while, I joined Coding.bn to relearn and improve my
-          skills. In our first assessment, we built a dynamic list using the
-          Spaceflight News API with React all from scratch and without an API
-          key. It was tough at first, but with help from mentors and teammates,
-          we got it working. It really helped refresh my React knowledge and
-          boost my confidence.
-        </p>
+  <p class="description">
+    Hi! I'm Syufiq, a Software Development graduate from Universiti Teknologi Brunei (UTB), where I studied for 4 years. Through the Coding.bn program under AITI, I’ve been learning AI and machine learning, including building chatbots and exploring practical AI tools to strengthen my development skills.
+  </p>
 
-        <p class="description">
-          For the second project, we created a personal portfolio using Vite and
-          Vue.js. I also used Tailwind CSS to make the design look cleaner and
-          work well on different screen sizes. This task helped me understand
-          how Vue components, routing, and reactivity work. I also learned how
-          tools like Vite and Tailwind can make front-end development faster and
-          easier. Overall, it was a great experience that helped me use what
-          I’ve learned in a real project and improve as a developer.
-        </p>
-      </div>
+  <p class="description">
+    I'm currently doing a 3-month internship at Imagine Sdn Bhd, where I’m applying what I’ve learned to real projects and gaining hands-on experience in both development and problem-solving.
+  </p>
+</div>
+
     </section>
 
     <section class="skills-section fade-in-bottom">
@@ -62,6 +50,10 @@ const skills = [
     logo: new URL("@/assets/react.svg", import.meta.url).href,
   },
   {
+    name: "Python",
+    logo: new URL("@/assets/python.svg", import.meta.url).href,
+  },
+  {
     name: "React Native",
     logo: new URL("@/assets/react.svg", import.meta.url).href,
   },
@@ -88,6 +80,10 @@ const skills = [
   {
     name: "Flutter",
     logo: new URL("@/assets/flutter.svg", import.meta.url).href,
+  },
+  {
+    name: "GitHub",
+    logo: new URL("@/assets/github.svg", import.meta.url).href,
   },
 ];
 </script>

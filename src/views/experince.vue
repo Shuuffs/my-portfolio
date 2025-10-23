@@ -2,54 +2,45 @@
   <div class="experience-wrapper">
     <h2 class="main-title">My Experiences</h2>
     
-    <div class="experiences-container">
-      <!-- Imagine Sdn Bhd -->
-      <div class="experience-card fade-in-left">
-        <div class="experience-header">
-          <h3>Imagine Sdn Bhd – Internship</h3>
-          <span class="duration">3 months</span>
-        </div>
-        <p class="role">Intern – Real-World Web Development Projects</p>
-        <div class="highlights">
-          <h4>Highlights:</h4>
-          <ul>
-            <li>Started building real-world websites addressing practical problems.</li>
-            <li>Learned to work on end-to-end web development projects, integrating frontend and backend.</li>
-            <li>Applied AI and ML knowledge to support project objectives.</li>
-          </ul>
-        </div>
+    <!-- Company Buttons Grid -->
+    <div class="buttons-container">
+      <!-- Imagine Sdn Bhd Button -->
+      <div class="company-button" @click="openModal('imagine')">
+        <img src="@/assets/imagine.png" alt="Imagine Sdn Bhd" />
+        <p class="company-name">Imagine Sdn Bhd</p>
       </div>
 
-      <!-- Coding BN Program -->
-      <div class="experience-card fade-in-right">
-        <div class="experience-header">
-          <h3>Coding BN Program – AI & ML Internship</h3>
-          <span class="duration">6 months</span>
-        </div>
-        <p class="role">Intern – Web Development, AI & ML</p>
-        <div class="highlights">
-          <h4>Highlights:</h4>
-          <ul>
-            <li>Learned basics of web app development and Python programming.</li>
-            <li>Gained foundational knowledge in Artificial Intelligence (AI) and Machine Learning (ML).</li>
-            <li>Hands-on practice through mini-projects and exercises in AI/ML concepts.</li>
-          </ul>
-        </div>
+      <!-- Coding BN Button -->
+      <div class="company-button" @click="openModal('codingbn')">
+        <img src="@/assets/cbn.png" alt="Coding BN Program" />
+        <p class="company-name">Coding BN Program for AITI</p>
       </div>
 
-      <!-- ABCI -->
-      <div class="experience-card fade-in-left">
-        <div class="experience-header">
-          <h3>ABCI – Authority on Building Control and Construction Industry</h3>
-          <span class="duration">8 months</span>
-        </div>
-        <p class="role">Intern / Student Attachment</p>
-        <div class="highlights">
+      <!-- ABCI Button -->
+      <div class="company-button" @click="openModal('abci')">
+        <img src="@/assets/abci.png" alt="ABCI" />
+        <p class="company-name">ABCI (Authority on Building Control and Construction Industry)</p>
+      </div>
+    </div>
+
+    <!-- Modal Popup -->
+    <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
+      <div class="modal-card" @click.stop>
+        <button class="modal-close" @click="closeModal">&times;</button>
+        
+        <img :src="currentCompany.logo" :alt="currentCompany.name" class="modal-logo" />
+        
+        <h3 class="modal-title">{{ currentCompany.name }}</h3>
+        <span class="modal-duration">{{ currentCompany.duration }}</span>
+        
+        <p class="modal-role">{{ currentCompany.role }}</p>
+        
+        <div class="modal-highlights">
           <h4>Highlights:</h4>
           <ul>
-            <li>Developed a Contractor Scoring System to replace the existing system with a standardized solution.</li>
-            <li>Improved efficiency in contractor evaluation and data management.</li>
-            <li>Gained experience in system analysis, design, and implementation.</li>
+            <li v-for="(highlight, index) in currentCompany.highlights" :key="index">
+              {{ highlight }}
+            </li>
           </ul>
         </div>
       </div>
@@ -58,7 +49,60 @@
 </template>
 
 <script setup>
-// No script needed for static content
+import { ref, computed } from 'vue';
+
+const isModalOpen = ref(false);
+const selectedCompany = ref('');
+
+// Company data
+const companies = {
+  imagine: {
+    name: 'Imagine Sdn Bhd – Internship',
+    duration: '3 months',
+    role: 'Intern – Real-World Web Development Projects',
+    logo: new URL('@/assets/imagine.png', import.meta.url).href,
+    highlights: [
+      'Started building real-world websites addressing practical problems.',
+      'Learned to work on end-to-end web development projects, integrating frontend and backend.',
+      'Applied AI and ML knowledge to support project objectives.'
+    ]
+  },
+  codingbn: {
+    name: 'Coding BN Program – AI & ML Internship',
+    duration: '6 months',
+    role: 'Intern – Web Development, AI & ML',
+    logo: new URL('@/assets/cbn.png', import.meta.url).href,
+    highlights: [
+      'Learned basics of web app development and Python programming.',
+      'Gained foundational knowledge in Artificial Intelligence (AI) and Machine Learning (ML).',
+      'Hands-on practice through mini-projects and exercises in AI/ML concepts.'
+    ]
+  },
+  abci: {
+    name: 'ABCI – Authority on Building Control and Construction Industry',
+    duration: '8 months',
+    role: 'Intern / Student Attachment',
+    logo: new URL('@/assets/abci.png', import.meta.url).href,
+    highlights: [
+      'Developed a Contractor Scoring System to replace the existing system with a standardized solution.',
+      'Improved efficiency in contractor evaluation and data management.',
+      'Gained experience in system analysis, design, and implementation.'
+    ]
+  }
+};
+
+const currentCompany = computed(() => companies[selectedCompany.value]);
+
+function openModal(companyKey) {
+  selectedCompany.value = companyKey;
+  isModalOpen.value = true;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  isModalOpen.value = false;
+  document.body.style.overflow = '';
+}
 </script>
 
 <style scoped>
@@ -67,6 +111,10 @@
   margin: 1rem auto;
   padding: 1rem;
   color: white;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media (min-width: 768px) {
@@ -91,183 +139,280 @@
   }
 }
 
-.experiences-container {
+/* Company Buttons Container */
+.buttons-container {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  align-items: center;
+  justify-content: center;
 }
 
-.experience-card {
+@media (min-width: 768px) {
+  .buttons-container {
+    flex-direction: row;
+    gap: 3rem;
+  }
+}
+
+/* Company Button Card */
+.company-button {
   background-color: rgba(0, 0, 0, 0.7);
   border: 1px solid #444;
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 @media (min-width: 768px) {
-  .experience-card {
-    padding: 2rem;
+  .company-button {
+    max-width: 300px;
   }
 }
 
-.experience-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+.company-button:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
-.experience-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid white;
+.company-button img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
 }
 
 @media (min-width: 768px) {
-  .experience-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  .company-button img {
+    width: 180px;
+    height: 180px;
   }
 }
 
-.experience-header h3 {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: white;
-  margin: 0;
+.company-button:hover img {
+  transform: scale(1.1);
 }
 
-@media (min-width: 768px) {
-  .experience-header h3 {
-    font-size: 1.5rem;
-  }
-}
-
-.duration {
-  display: inline-block;
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  align-self: flex-start;
-}
-
-@media (min-width: 768px) {
-  .duration {
-    font-size: 1rem;
-  }
-}
-
-.role {
+.company-name {
   font-size: 1rem;
-  color: #ddd;
-  margin-bottom: 1rem;
-  font-style: italic;
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
 }
 
 @media (min-width: 768px) {
-  .role {
+  .company-name {
     font-size: 1.125rem;
   }
 }
 
-.highlights {
-  margin-top: 1rem;
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
 }
 
-.highlights h4 {
-  font-size: 1.125rem;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Card */
+.modal-card {
+  background-color: rgba(0, 0, 0, 0.95);
+  border: 2px solid white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: scaleUp 0.3s ease;
+  box-shadow: 0 10px 50px rgba(255, 255, 255, 0.1);
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 768px) {
+  .modal-card {
+    padding: 2.5rem;
+  }
+}
+
+/* Modal Close Button */
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
   color: white;
-  margin-bottom: 0.75rem;
+  font-size: 2.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+/* Modal Logo */
+.modal-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .modal-logo {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Modal Title */
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin: 0 0 1rem 0;
+}
+
+@media (min-width: 768px) {
+  .modal-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Modal Duration */
+.modal-duration {
+  display: block;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 auto 1.5rem;
+  width: fit-content;
+}
+
+@media (min-width: 768px) {
+  .modal-duration {
+    font-size: 1rem;
+  }
+}
+
+/* Modal Role */
+.modal-role {
+  font-size: 1rem;
+  color: #ddd;
+  text-align: center;
+  margin: 0 0 1.5rem 0;
+  font-style: italic;
+}
+
+@media (min-width: 768px) {
+  .modal-role {
+    font-size: 1.125rem;
+  }
+}
+
+/* Modal Highlights */
+.modal-highlights {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid white;
+}
+
+.modal-highlights h4 {
+  font-size: 1.25rem;
+  color: white;
+  margin-bottom: 1rem;
   font-weight: 600;
 }
 
 @media (min-width: 768px) {
-  .highlights h4 {
-    font-size: 1.25rem;
+  .modal-highlights h4 {
+    font-size: 1.375rem;
   }
 }
 
-.highlights ul {
+.modal-highlights ul {
   list-style-type: none;
   padding-left: 0;
   margin: 0;
 }
 
-.highlights li {
+.modal-highlights li {
   position: relative;
   padding-left: 1.75rem;
-  margin-bottom: 0.75rem;
-  color: #ccc;
+  margin-bottom: 0.875rem;
+  color: #ddd;
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 @media (min-width: 768px) {
-  .highlights li {
-    font-size: 1rem;
+  .modal-highlights li {
+    font-size: 1.0625rem;
   }
 }
 
-.highlights li:before {
+.modal-highlights li:before {
   content: "▹";
   position: absolute;
   left: 0;
   color: white;
   font-size: 1.5rem;
   line-height: 1;
-}
-
-/* Animations */
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.fade-in-left {
-  opacity: 0;
-  animation: fadeInLeft 0.8s ease-out forwards;
-}
-
-.fade-in-right {
-  opacity: 0;
-  animation: fadeInRight 0.8s ease-out forwards;
-}
-
-/* Stagger animation delays */
-.experience-card:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.experience-card:nth-child(2) {
-  animation-delay: 0.3s;
-}
-
-.experience-card:nth-child(3) {
-  animation-delay: 0.5s;
 }
 </style>
 

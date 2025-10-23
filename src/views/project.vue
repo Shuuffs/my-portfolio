@@ -192,7 +192,8 @@ function closeModal() {
   padding: 1.25rem;
   width: 100%;
   max-width: 100%;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 @media (min-width: 540px) {
@@ -206,7 +207,8 @@ function closeModal() {
 }
 
 .education-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .education-card img {

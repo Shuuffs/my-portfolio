@@ -1,137 +1,69 @@
 <template>
   <div class="experience-wrapper">
-    <!--  Experience List -->
-    <div class="experience-list fade-in">
-      <h3>My Experiences</h3>
-      <div v-if="experiences.length === 0">No experiences added yet.</div>
-      <div v-else>
-        <div
-          v-for="(exp, index) in experiences"
-          :key="index"
-          class="experience-item"
-        >
-          <h4>{{ exp.title }}</h4>
-          <p>
-            <strong>{{ exp.dates }}</strong> at {{ exp.place }}
-          </p>
-          <p>{{ exp.description }}</p>
-
-          <!-- 📄 Show file if uploaded -->
-          <div v-if="exp.file">
-            <a :href="exp.file" target="_blank" class="file-link"
-              >View Attached File</a
-            >
-          </div>
-
-          <button @click="deleteExperience(index)" class="delete-btn">
-            Delete
-          </button>
+    <h2 class="main-title">My Experiences</h2>
+    
+    <div class="experiences-container">
+      <!-- Imagine Sdn Bhd -->
+      <div class="experience-card fade-in-left">
+        <div class="experience-header">
+          <h3>Imagine Sdn Bhd – Internship</h3>
+          <span class="duration">3 months</span>
+        </div>
+        <p class="role">Intern – Real-World Web Development Projects</p>
+        <div class="highlights">
+          <h4>Highlights:</h4>
+          <ul>
+            <li>Started building real-world websites addressing practical problems.</li>
+            <li>Learned to work on end-to-end web development projects, integrating frontend and backend.</li>
+            <li>Applied AI and ML knowledge to support project objectives.</li>
+          </ul>
         </div>
       </div>
-    </div>
 
-    <h2>Add Experience</h2>
+      <!-- Coding BN Program -->
+      <div class="experience-card fade-in-right">
+        <div class="experience-header">
+          <h3>Coding BN Program – AI & ML Internship</h3>
+          <span class="duration">6 months</span>
+        </div>
+        <p class="role">Intern – Web Development, AI & ML</p>
+        <div class="highlights">
+          <h4>Highlights:</h4>
+          <ul>
+            <li>Learned basics of web app development and Python programming.</li>
+            <li>Gained foundational knowledge in Artificial Intelligence (AI) and Machine Learning (ML).</li>
+            <li>Hands-on practice through mini-projects and exercises in AI/ML concepts.</li>
+          </ul>
+        </div>
+      </div>
 
-    <div class="experience-content">
-      <!-- 📋 Form Section -->
-      <form @submit.prevent="handleSubmit" class="experience-form fade-in">
-        <input
-          v-model="title"
-          type="text"
-          placeholder="Title (e.g. Intern, Teacher)"
-          required
-        />
-        <input
-          v-model="dates"
-          type="text"
-          placeholder="Dates (e.g. Jan 2020 - Dec 2020)"
-          required
-        />
-        <input
-          v-model="place"
-          type="text"
-          placeholder="Company/School Name"
-          required
-        />
-        <textarea
-          v-model="description"
-          placeholder="Description"
-          rows="3"
-          required
-        ></textarea>
-
-        <!-- 📎 File Upload -->
-        <input
-          type="file"
-          @change="handleFileUpload"
-          accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-        />
-
-        <button type="submit">Add Experience</button>
-      </form>
+      <!-- ABCI -->
+      <div class="experience-card fade-in-left">
+        <div class="experience-header">
+          <h3>ABCI – Authority on Building Control and Construction Industry</h3>
+          <span class="duration">8 months</span>
+        </div>
+        <p class="role">Intern / Student Attachment</p>
+        <div class="highlights">
+          <h4>Highlights:</h4>
+          <ul>
+            <li>Developed a Contractor Scoring System to replace the existing system with a standardized solution.</li>
+            <li>Improved efficiency in contractor evaluation and data management.</li>
+            <li>Gained experience in system analysis, design, and implementation.</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-
-const title = ref("");
-const dates = ref("");
-const place = ref("");
-const description = ref("");
-const file = ref(null); // Store file as base64
-const experiences = ref([]);
-
-// Load from localStorage
-onMounted(() => {
-  const stored = localStorage.getItem("experiences");
-  if (stored) experiences.value = JSON.parse(stored);
-});
-
-// Handle File Upload
-function handleFileUpload(e) {
-  const uploadedFile = e.target.files[0];
-  if (!uploadedFile) return;
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    file.value = reader.result;
-  };
-  reader.readAsDataURL(uploadedFile);
-}
-
-// Submit Form
-function handleSubmit() {
-  const newExperience = {
-    title: title.value,
-    dates: dates.value,
-    place: place.value,
-    description: description.value,
-    file: file.value || null,
-  };
-
-  experiences.value.push(newExperience);
-  localStorage.setItem("experiences", JSON.stringify(experiences.value));
-
-  // Clear form
-  title.value = "";
-  dates.value = "";
-  place.value = "";
-  description.value = "";
-  file.value = null;
-}
-
-// Delete Experience
-function deleteExperience(index) {
-  experiences.value.splice(index, 1);
-  localStorage.setItem("experiences", JSON.stringify(experiences.value));
-}
+// No script needed for static content
 </script>
 
 <style scoped>
 .experience-wrapper {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 1rem auto;
   padding: 1rem;
   color: white;
@@ -140,181 +72,202 @@ function deleteExperience(index) {
 @media (min-width: 768px) {
   .experience-wrapper {
     margin: 2rem auto;
-    padding: 1.5rem;
+    padding: 2rem;
   }
 }
 
-.experience-wrapper h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .experience-wrapper h2 {
-    font-size: 2rem;
-  }
-}
-
-.experience-content {
-  display: flex;
-  flex-direction: column;
-}
-
-@media (max-width: 768px) {
-  .experience-content {
-    flex-direction: column;
-  }
-}
-
-.experience-form {
-  flex: 5;
-  width: 100%;
-}
-
-.experience-list {
-  flex: 2;
-  min-width: 100%;
+.main-title {
+  font-size: 2rem;
   margin-bottom: 2rem;
+  text-align: center;
+  font-weight: bold;
+  color: white;
 }
 
 @media (min-width: 768px) {
-  .experience-list {
-    min-width: 300px;
+  .main-title {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
   }
 }
 
-.experience-form {
+.experiences-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+}
+
+.experience-card {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid #444;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 @media (min-width: 768px) {
-  .experience-form {
-    gap: 2rem;
+  .experience-card {
+    padding: 2rem;
   }
 }
 
-.experience-form input,
-.experience-form textarea {
-  padding: 0.75rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 0.95rem;
-  background: white;
-  color: black;
+.experience-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-@media (min-width: 768px) {
-  .experience-form input,
-  .experience-form textarea {
-    font-size: 1rem;
-  }
-}
-
-.experience-form button {
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  padding: 0.75rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.experience-form button:hover {
-  background-color: #1e40af;
-}
-
-.experience-list h3 {
+.experience-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   margin-bottom: 1rem;
-  font-size: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid white;
 }
 
 @media (min-width: 768px) {
-  .experience-list h3 {
+  .experience-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.experience-header h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .experience-header h3 {
     font-size: 1.5rem;
   }
 }
 
-.experience-item {
-  background-color: rgba(0, 0, 0, 0.7);
-  border: 1px solid #444;
-  border-radius: 10px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  position: relative;
-  word-wrap: break-word;
-}
-
-.experience-item h4 {
-  font-size: 1.1rem;
-}
-
-@media (min-width: 768px) {
-  .experience-item h4 {
-    font-size: 1.2rem;
-  }
-}
-
-.experience-item p {
+.duration {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
   font-size: 0.9rem;
+  font-weight: 600;
+  align-self: flex-start;
 }
 
 @media (min-width: 768px) {
-  .experience-item p {
+  .duration {
     font-size: 1rem;
   }
 }
 
-.delete-btn {
-  margin-top: 0.5rem;
-  background-color: #dc2626;
-  color: white;
-  border: none;
-  padding: 0.4rem 0.6rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.875rem;
-}
-
-.delete-btn:hover {
-  background-color: #b91c1c;
-}
-
-.file-link {
-  display: inline-block;
-  margin-top: 0.5rem;
-  color: #38bdf8;
-  text-decoration: underline;
-  font-size: 0.9rem;
-  word-break: break-all;
+.role {
+  font-size: 1rem;
+  color: #ddd;
+  margin-bottom: 1rem;
+  font-style: italic;
 }
 
 @media (min-width: 768px) {
-  .file-link {
-    font-size: 0.95rem;
+  .role {
+    font-size: 1.125rem;
   }
 }
 
-.file-link:hover {
-  color: #0ea5e9;
+.highlights {
+  margin-top: 1rem;
 }
 
-/* ✨ Fade-in animation */
-@keyframes fadeIn {
+.highlights h4 {
+  font-size: 1.125rem;
+  color: white;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .highlights h4 {
+    font-size: 1.25rem;
+  }
+}
+
+.highlights ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.highlights li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 0.75rem;
+  color: #ccc;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 768px) {
+  .highlights li {
+    font-size: 1rem;
+  }
+}
+
+.highlights li:before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* Animations */
+@keyframes fadeInLeft {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(-40px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
-.fade-in {
-  animation: fadeIn 0.6s ease-in-out;
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in-left {
+  opacity: 0;
+  animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.fade-in-right {
+  opacity: 0;
+  animation: fadeInRight 0.8s ease-out forwards;
+}
+
+/* Stagger animation delays */
+.experience-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.experience-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.experience-card:nth-child(3) {
+  animation-delay: 0.5s;
 }
 </style>
+

@@ -23,14 +23,21 @@
 
     <!-- PAGE CONTENT -->
     <main class="page">
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </main>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
+const router = useRouter();
 const isMenuOpen = ref(false);
 
 function toggleMenu() {
@@ -40,9 +47,60 @@ function toggleMenu() {
 function closeMenu() {
   isMenuOpen.value = false;
 }
+
+// Watch for route changes and close menu
+watch(() => route.path, () => {
+  closeMenu();
+  // Smooth scroll to top on route change
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Auto-scroll navigation based on scroll position
+let scrollTimeout;
+const routes = [
+  { path: '/', threshold: 0 },
+  { path: '/about', threshold: 0.2 },
+  { path: '/project', threshold: 0.4 },
+  { path: '/experince', threshold: 0.6 },
+  { path: '/contact', threshold: 0.8 }
+];
+
+function handleScroll() {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    const scrollPosition = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    const scrollPercentage = scrollPosition / (documentHeight - windowHeight);
+
+    // Find the appropriate route based on scroll position
+    for (let i = routes.length - 1; i >= 0; i--) {
+      if (scrollPercentage >= routes[i].threshold) {
+        if (route.path !== routes[i].path) {
+          router.push(routes[i].path);
+        }
+        break;
+      }
+    }
+  }, 100); // Debounce scroll events
+}
+
+onMounted(() => {
+  // Enable scroll-based navigation
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+  clearTimeout(scrollTimeout);
+});
 </script>
 
 <style>
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   margin: 0;
@@ -218,20 +276,27 @@ body {
 
 /* Hover Effect */
 .nav-links :deep(a:hover) {
-  font-weight: bold;
   color: #60a5fa;
 }
 
-/* Active Route Link */
-.nav-links :deep(.active) {
+/* Active Route Link - Mobile */
+.nav-links :deep(a.active) {
   font-weight: bold;
   color: #60a5fa;
-  text-decoration: none;
+  background-color: rgba(96, 165, 250, 0.1);
+  border-left: 3px solid #60a5fa;
+  padding-left: 0.75rem;
 }
 
+/* Active Route Link - Desktop */
 @media (min-width: 768px) {
-  .nav-links :deep(.active) {
-    color: white;
+  .nav-links :deep(a.active) {
+    color: #60a5fa;
+    background-color: transparent;
+    border-left: none;
+    padding-left: 0;
+    border-bottom: 2px solid #60a5fa;
+    padding-bottom: 0.25rem;
   }
 }
 
@@ -255,6 +320,28 @@ body {
   .layout:has(.nav-links.open) {
     overflow: hidden;
   }
+}
+
+/* Page Transition Animations */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 </style>

@@ -56,7 +56,8 @@ function goToContact() {
   justify-content: center;
   padding: 1rem;
   color: white;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px); /* Account for fixed navbar */
+  margin-top: 0;
 }
 
 @media (min-width: 768px) {
@@ -65,6 +66,7 @@ function goToContact() {
     align-items: center;
     padding: 2rem;
     gap: 3rem;
+    min-height: calc(100vh - 80px); /* Account for fixed navbar on desktop */
   }
 }
 

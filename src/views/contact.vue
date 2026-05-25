@@ -8,18 +8,18 @@
           <li>
             <strong>Address:</strong>
             <a
-              href="https://www.google.com/maps/place/23+Jalan+Teknologi,+Kg+Anggerek+Desa,+BB3713,+Bandar+Seri+Begawan,+Brunei+Darussalam"
+              href="https://www.google.com/maps/search/No+139+E,+Kg+Lurong+Sekuna,+Bandar+Seri+Begawan,+BP2126,+Brunei"
               target="_blank"
               ><br />
-              23 Jalan Teknologi, <br />Kg Anggerek Desa BB3713<br />
-              Bandar Seri Begawan <br />
-              Brunei Darussalam<br />
+              No 139 'E', Kg Lurong Sekuna,<br />
+              Bandar Seri Begawan,<br />
+              BP2126, Brunei Darussalam<br />
             </a>
           </li>
 
           <li>
             <strong>Telephone:</strong>
-            <a number="+673 1234567">+673 1234567</a>
+            <a href="tel:+6737321539">+673 7321539</a>
           </li>
           <li>
             <strong>Email:</strong>
@@ -58,28 +58,19 @@
     <div class="contact-social fade-on-up">
       <h2>Find Me Online</h2>
       <div class="social-icons">
-        <!-- Instagram -->
-        <a href="https://instagram.com" target="_blank" aria-label="Instagram">
-          <i class="fab fa-instagram"></i>
+        <!-- GitHub -->
+        <a href="https://github.com/Shuuffs" target="_blank" aria-label="GitHub">
+          <i class="fab fa-github"></i>
         </a>
 
-        <!-- Facebook -->
-        <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-          <i class="fab fa-facebook"></i>
-        </a>
-
-        <!-- Gmail (using envelope icon) -->
-        <a href="mailto:syufiq@example.com" target="_blank" aria-label="Gmail">
+        <!-- Email -->
+        <a href="mailto:syufiq1507@gmail.com" aria-label="Email">
           <i class="fas fa-envelope"></i>
         </a>
 
-        <!-- TikTok -->
-        <a
-          href="https://www.tiktok.com/@yourusername"
-          target="_blank"
-          aria-label="TikTok"
-        >
-          <i class="fab fa-tiktok"></i>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/_syufiq/" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
         </a>
       </div>
     </div>

@@ -58,12 +58,13 @@ const selectedCompany = ref('');
 const companies = {
   imagine: {
     name: 'Imagine Sdn Bhd – Internship',
-    duration: '3 months',
+    duration: '6 months',
     role: 'Intern – Real-World Web Development Projects',
     logo: new URL('@/assets/imagine.png', import.meta.url).href,
     highlights: [
-      'Started building real-world websites addressing practical problems.',
-      'Learned to work on end-to-end web development projects, integrating frontend and backend.',
+      'Built real-world websites addressing practical business problems, integrating frontend and backend.',
+      'Implemented a payment gateway to enable secure online transactions within the platform.',
+      'Contributed to location-based feature development, including geofencing capabilities (details under NDA).',
       'Applied AI and ML knowledge to support project objectives.'
     ]
   },

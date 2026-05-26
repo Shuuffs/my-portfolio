@@ -2,26 +2,20 @@
   <div>
     <section class="education-section fade-in-bottom">
       <h2 class="section-title">Education</h2>
-
-      <div class="education-row">
-        <!-- A-Level -->
-        <div class="education-card">
-          <img src="@/assets/md.jfif" alt="A-Level" />
+      <div v-if="loadingEducation" class="loading">Loading...</div>
+      <div v-else class="education-row">
+        <div
+          v-for="edu in education"
+          :key="edu.id"
+          class="education-card"
+        >
+          <img :src="'/' + edu.logo_filename" :alt="edu.institution" />
           <div class="education-details">
-            <h3>February 2018 – November 2019</h3>
-            <p>Maktab Duli Pengiran Muda Al-Muhtadee Billah, My Subject are:</p>
-            <p>Chemistry, Mathematics, Physics</p>
-          </div>
-        </div>
-
-        <!-- UTB -->
-        <div class="education-card">
-          <img src="@/assets/utb.png" alt="UTB" />
-          <div class="education-details">
-            <h3>August 2020 – August 2024</h3>
-            <p>Universiti Teknologi Brunei</p>
-            <p>Bachelor of Science in Computing</p>
-            <p><em>Major in Software Development</em></p>
+            <h3>{{ edu.period }}</h3>
+            <p v-for="(detail, i) in edu.details" :key="i">
+              <em v-if="i === edu.details.length - 1">{{ detail }}</em>
+              <span v-else>{{ detail }}</span>
+            </p>
           </div>
         </div>
       </div>
@@ -29,82 +23,24 @@
 
     <section class="projects-section fade-in-bottom">
       <h2 class="section-title">Projects</h2>
-      <div class="projects-grid">
-        <!-- AI Todolist Project -->
-        <div class="project-card fade-in-left">
+      <div v-if="loadingProjects" class="loading">Loading...</div>
+      <div v-else class="projects-grid">
+        <div
+          v-for="project in projects"
+          :key="project.id"
+          class="project-card"
+          :class="project.id % 2 === 1 ? 'fade-in-left' : 'fade-in-right'"
+        >
           <img
-            src="@/assets/ai.jpg"
-            alt="AI Todolist"
+            :src="project.image_url"
+            :alt="project.title"
             class="project-img"
-            @click="openModal('@/assets/ai.jpg', 'AI Todolist')"
+            @click="openModal(project.image_url, project.title)"
           />
           <div>
-            <h3>AI Todolist</h3>
-            <p>
-              An intelligent to-do list application with a functional chatbot powered by Google's Gemini AI (free tier). 
-              Users can manage tasks through natural conversation, with the AI understanding context and helping organize 
-              daily activities efficiently.
-            </p>
-            <span class="tech-used">React • Gemini AI • JavaScript • CSS</span>
-          </div>
-        </div>
-
-        <!-- MSME Management System -->
-        <div class="project-card fade-in-right">
-          <img
-            src="@/assets/msme.png"
-            alt="MSME Management System"
-            class="project-img"
-            @click="openModal('@/assets/msme.png', 'MSME Management System')"
-          />
-          <div>
-            <h3>MSME Management System</h3>
-            <p>
-              A comprehensive management system designed for small businesses and grocery stores. 
-              Features include inventory tracking, sales management, revenue analytics, and business insights 
-              to help micro, small, and medium enterprises streamline their operations.
-            </p>
-            <span class="tech-used">React • Node.js • MongoDB • Chart.js</span>
-          </div>
-        </div>
-
-        <!-- Laravel Project -->
-        <div class="project-card fade-in-left">
-          <img
-            src="@/assets/csa.png"
-            alt="Contractor Scoring System"
-            class="project-img"
-            @click="openModal('@/assets/csa.png', 'Contractor Scoring System')"
-          />
-          <div>
-            <h3>Contractor Scoring System</h3>
-            <p>
-              Built with Laravel, this web system evaluates contractor
-              performance by scoring their completed work. High-scoring
-              contractors are marked as excellent, while poorly rated ones are
-              blacklisted for accountability.
-            </p>
-            <span class="tech-used">Laravel • PHP • MySQL</span>
-          </div>
-        </div>
-
-        <!-- Flutter Project -->
-        <div class="project-card fade-in-right">
-          <img
-            src="@/assets/wts.png"
-            alt="Water Taxi Tracking App"
-            class="project-img"
-            @click="openModal('@/assets/wts.png', 'Water Taxi Tracking App')"
-          />
-          <div>
-            <h3>Water Taxi Tracking App</h3>
-            <p>
-              A Flutter-based mobile app developed with Android Studio that
-              helps Kampung Ayer residents and tourists book water taxis like
-              Uber. It features real-time tracking, tidal predictions, and
-              hotspot customer locations.
-            </p>
-            <span class="tech-used">Flutter • Android Studio • Firebase</span>
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.description }}</p>
+            <span class="tech-used">{{ project.tech_stack }}</span>
           </div>
         </div>
       </div>
@@ -122,28 +58,52 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { supabase } from '@/lib/supabase';
+
+const loadingEducation = ref(true);
+const loadingProjects = ref(true);
+const education = ref([]);
+const projects = ref([]);
 
 const isModalOpen = ref(false);
 const modalImage = ref('');
 const modalAlt = ref('');
 
+onMounted(async () => {
+  const [eduRes, projRes] = await Promise.all([
+    supabase.from('education').select('*').order('display_order'),
+    supabase.from('projects').select('*').order('id'),
+  ]);
+
+  education.value = eduRes.data || [];
+  loadingEducation.value = false;
+
+  projects.value = projRes.data || [];
+  loadingProjects.value = false;
+});
+
 function openModal(imageSrc, imageAlt) {
-  // Convert the @/assets path to actual import
-  const imageUrl = new URL(`../assets/${imageSrc.split('/').pop()}`, import.meta.url).href;
-  modalImage.value = imageUrl;
+  modalImage.value = imageSrc;
   modalAlt.value = imageAlt;
   isModalOpen.value = true;
-  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
   isModalOpen.value = false;
-  document.body.style.overflow = ''; // Restore scrolling
+  document.body.style.overflow = '';
 }
 </script>
 
 <style>
+.loading {
+  text-align: center;
+  color: #aaa;
+  font-size: 1rem;
+  padding: 1rem;
+}
+
 .education-section {
   padding: 1.5rem 1rem;
   color: white;
@@ -248,23 +208,16 @@ function closeModal() {
   }
 }
 
-.education-details p,
-.education-details ul {
+.education-details p {
   margin: 0.3rem 0;
   color: #ddd;
   font-size: 0.9rem;
 }
 
 @media (min-width: 768px) {
-  .education-details p,
-  .education-details ul {
+  .education-details p {
     font-size: 1rem;
   }
-}
-
-.education-details ul {
-  list-style-type: disc;
-  padding-left: 1.2rem;
 }
 
 .projects-section {
@@ -356,6 +309,7 @@ function closeModal() {
 .project-card h3 {
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
+  color: white;
 }
 
 @media (min-width: 768px) {
@@ -399,84 +353,33 @@ function closeModal() {
   width: 100%;
 }
 
-/* Animation */
-.fade-in-top {
-  animation: fadeInTop 1s ease forwards;
-}
-.fade-in-left {
-  animation: fadeInLeft 1s ease forwards;
-}
-.fade-in-right {
-  animation: fadeInRight 1s ease forwards;
-}
-.fade-in-bottom {
-  animation: fadeInBottom 1s ease forwards;
-}
-
-@keyframes fadeInTop {
-  from {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInBottom {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Animations */
+.fade-in-left { animation: fadeInLeft 1s ease forwards; }
+.fade-in-right { animation: fadeInRight 1s ease forwards; }
 .fade-in-bottom {
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInBottom 0.8s ease-out forwards;
 }
 
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
 @keyframes fadeInBottom {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Modal/Lightbox Styles */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background-color: rgba(0, 0, 0, 0.95);
   display: flex;
   justify-content: center;
@@ -537,22 +440,12 @@ function closeModal() {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes zoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>

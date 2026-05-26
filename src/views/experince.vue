@@ -1,25 +1,19 @@
 <template>
   <div class="experience-wrapper">
     <h2 class="main-title">My Experiences</h2>
-    
+
+    <div v-if="loading" class="loading">Loading...</div>
+
     <!-- Company Buttons Grid -->
-    <div class="buttons-container">
-      <!-- Imagine Sdn Bhd Button -->
-      <div class="company-button" @click="openModal('imagine')">
-        <img src="@/assets/imagine.png" alt="Imagine Sdn Bhd" />
-        <p class="company-name">Imagine Sdn Bhd</p>
-      </div>
-
-      <!-- Coding BN Button -->
-      <div class="company-button" @click="openModal('codingbn')">
-        <img src="@/assets/cbn.png" alt="Coding BN Program" />
-        <p class="company-name">Coding BN Program for AITI</p>
-      </div>
-
-      <!-- ABCI Button -->
-      <div class="company-button" @click="openModal('abci')">
-        <img src="@/assets/abci.png" alt="ABCI" />
-        <p class="company-name">ABCI (Authority on Building Control and Construction Industry)</p>
+    <div v-else class="buttons-container">
+      <div
+        v-for="company in experiences"
+        :key="company.id"
+        class="company-button"
+        @click="openModal(company)"
+      >
+        <img :src="company.logo_url" :alt="company.company_name" />
+        <p class="company-name">{{ company.company_name }}</p>
       </div>
     </div>
 
@@ -27,14 +21,14 @@
     <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
       <div class="modal-card" @click.stop>
         <button class="modal-close" @click="closeModal">&times;</button>
-        
-        <img :src="currentCompany.logo" :alt="currentCompany.name" class="modal-logo" />
-        
-        <h3 class="modal-title">{{ currentCompany.name }}</h3>
+
+        <img :src="currentCompany.logo_url" :alt="currentCompany.company_name" class="modal-logo" />
+
+        <h3 class="modal-title">{{ currentCompany.company_name }}</h3>
         <span class="modal-duration">{{ currentCompany.duration }}</span>
-        
+
         <p class="modal-role">{{ currentCompany.role }}</p>
-        
+
         <div class="modal-highlights">
           <h4>Highlights:</h4>
           <ul>
@@ -49,53 +43,25 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
+import { supabase } from '@/lib/supabase';
 
+const loading = ref(true);
+const experiences = ref([]);
 const isModalOpen = ref(false);
-const selectedCompany = ref('');
+const currentCompany = ref(null);
 
-// Company data
-const companies = {
-  imagine: {
-    name: 'Imagine Sdn Bhd – Internship',
-    duration: '6 months',
-    role: 'Intern – Real-World Web Development Projects',
-    logo: new URL('@/assets/imagine.png', import.meta.url).href,
-    highlights: [
-      'Built real-world websites addressing practical business problems, integrating frontend and backend.',
-      'Implemented a payment gateway to enable secure online transactions within the platform.',
-      'Contributed to location-based feature development, including geofencing capabilities (details under NDA).',
-      'Applied AI and ML knowledge to support project objectives.'
-    ]
-  },
-  codingbn: {
-    name: 'Coding BN Program – AI & ML Internship',
-    duration: '6 months',
-    role: 'Intern – Web Development, AI & ML',
-    logo: new URL('@/assets/cbn.png', import.meta.url).href,
-    highlights: [
-      'Learned basics of web app development and Python programming.',
-      'Gained foundational knowledge in Artificial Intelligence (AI) and Machine Learning (ML).',
-      'Hands-on practice through mini-projects and exercises in AI/ML concepts.'
-    ]
-  },
-  abci: {
-    name: 'ABCI – Authority on Building Control and Construction Industry',
-    duration: '8 months',
-    role: 'Intern / Student Attachment',
-    logo: new URL('@/assets/abci.png', import.meta.url).href,
-    highlights: [
-      'Developed a Contractor Scoring System to replace the existing system with a standardized solution.',
-      'Improved efficiency in contractor evaluation and data management.',
-      'Gained experience in system analysis, design, and implementation.'
-    ]
-  }
-};
+onMounted(async () => {
+  const { data } = await supabase
+    .from('experiences')
+    .select('*')
+    .order('id');
+  experiences.value = data || [];
+  loading.value = false;
+});
 
-const currentCompany = computed(() => companies[selectedCompany.value]);
-
-function openModal(companyKey) {
-  selectedCompany.value = companyKey;
+function openModal(company) {
+  currentCompany.value = company;
   isModalOpen.value = true;
   document.body.style.overflow = 'hidden';
 }
@@ -138,6 +104,12 @@ function closeModal() {
     font-size: 2.5rem;
     margin-bottom: 3rem;
   }
+}
+
+.loading {
+  text-align: center;
+  color: #aaa;
+  font-size: 1.2rem;
 }
 
 /* Company Buttons Container */
@@ -234,12 +206,8 @@ function closeModal() {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Modal Card */
@@ -258,14 +226,8 @@ function closeModal() {
 }
 
 @keyframes scaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @media (min-width: 768px) {
@@ -416,4 +378,3 @@ function closeModal() {
   line-height: 1;
 }
 </style>
-

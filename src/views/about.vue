@@ -7,24 +7,20 @@
       </div>
 
       <div class="text-block animate-fade-in-up">
-  <h2>About Me</h2>
-
-  <p class="description">
-    Hi! I'm Syufiq, a Software Development graduate from Universiti Teknologi Brunei (UTB), where I studied for 4 years. Through the Coding.bn program under AITI, I’ve been learning AI and machine learning, including building chatbots and exploring practical AI tools to strengthen my development skills.
-  </p>
-
-  <p class="description">
-    I'm currently doing a 3-month internship at Imagine Sdn Bhd, where I’m applying what I’ve learned to real projects and gaining hands-on experience in both development and problem-solving.
-  </p>
-</div>
-
+        <h2>About Me</h2>
+        <div v-if="loadingAbout" class="loading">Loading...</div>
+        <template v-else>
+          <p class="description">{{ aboutContent }}</p>
+        </template>
+      </div>
     </section>
 
     <section class="skills-section fade-in-bottom">
       <h1>Skills</h1>
-      <div class="skills-grid">
-        <div class="skill-item" v-for="skill in skills" :key="skill.name">
-          <img :src="skill.logo" :alt="skill.name" />
+      <div v-if="loadingSkills" class="loading">Loading...</div>
+      <div v-else class="skills-grid">
+        <div class="skill-item" v-for="skill in skills" :key="skill.id">
+          <img :src="skill.icon_url" :alt="skill.name" />
           <span>{{ skill.name }}</span>
         </div>
       </div>
@@ -33,62 +29,36 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-const router = useRouter();
+import { ref, onMounted } from 'vue';
+import { supabase } from '@/lib/supabase';
 
-function goToContact() {
-  router.push("/contact");
-}
+const loadingAbout = ref(true);
+const loadingSkills = ref(true);
+const aboutContent = ref('');
+const skills = ref([]);
 
-const skills = [
-  {
-    name: "VueJS",
-    logo: new URL("@/assets/vue.svg", import.meta.url).href,
-  },
-  {
-    name: "ReactJS",
-    logo: new URL("@/assets/react.svg", import.meta.url).href,
-  },
-  {
-    name: "Python",
-    logo: new URL("@/assets/python.svg", import.meta.url).href,
-  },
-  {
-    name: "React Native",
-    logo: new URL("@/assets/react.svg", import.meta.url).href,
-  },
-  {
-    name: "Expo",
-    logo: new URL("@/assets/expo.svg", import.meta.url).href,
-  },
-  {
-    name: "Supabase",
-    logo: new URL("@/assets/supabase.svg", import.meta.url).href,
-  },
-  {
-    name: "VS Code",
-    logo: new URL("@/assets/vsc.png", import.meta.url).href,
-  },
-  {
-    name: "Tailwind CSS",
-    logo: new URL("@/assets/tailwind.png", import.meta.url).href,
-  },
-  {
-    name: "NodeJS",
-    logo: new URL("@/assets/node.svg", import.meta.url).href,
-  },
-  {
-    name: "Flutter",
-    logo: new URL("@/assets/flutter.svg", import.meta.url).href,
-  },
-  {
-    name: "GitHub",
-    logo: new URL("@/assets/github.svg", import.meta.url).href,
-  },
-];
+onMounted(async () => {
+  const [aboutRes, skillsRes] = await Promise.all([
+    supabase.from('about').select('content').single(),
+    supabase.from('skills').select('id, name, icon_url').order('id'),
+  ]);
+
+  aboutContent.value = aboutRes.data?.content || '';
+  loadingAbout.value = false;
+
+  skills.value = (skillsRes.data || []).filter(s => s.icon_url);
+  loadingSkills.value = false;
+});
 </script>
 
 <style>
+.loading {
+  text-align: center;
+  color: #aaa;
+  font-size: 1rem;
+  padding: 1rem;
+}
+
 .skills-section {
   text-align: center;
   color: white;
@@ -268,22 +238,6 @@ const skills = [
   color: #bbb;
 }
 
-.btn-contact {
-  margin-top: 1rem;
-  padding: 0.6rem 1.5rem;
-  background-color: #2563eb;
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-contact:hover {
-  background-color: #1e40af;
-}
-
 .image-block2 {
   width: 100%;
   max-width: 200px;
@@ -317,28 +271,17 @@ const skills = [
 
 /* Animations */
 @keyframes fade-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 .animate-fade-in-left {
   animation: fade-in-left 1s ease-out forwards;
 }
+
 @keyframes fadeInBottom {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in-bottom {
